@@ -2,7 +2,7 @@ package io.github.jack9761.MicroComputers.fabric;
 
 import net.fabricmc.api.ModInitializer;
 
-import io.github.jack9761.MicroComputers.ExampleMod;
+import io.github.jack9761.MicroComputers.MicroComputers;
 
 public final class ExampleModFabric implements ModInitializer {
     @Override
@@ -12,6 +12,6 @@ public final class ExampleModFabric implements ModInitializer {
         // Proceed with mild caution.
 
         // Run our common setup.
-        ExampleMod.init();
+        MicroComputers.init();
     }
 }

@@ -1,6 +1,6 @@
 package io.github.jack9761.MicroComputers;
 
-public final class ExampleMod {
+public final class MicroComputers {
     public static final String MOD_ID = "microcomputers";
 
     public static void init() {
