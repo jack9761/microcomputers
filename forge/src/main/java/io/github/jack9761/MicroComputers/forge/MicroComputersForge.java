@@ -1,7 +1,7 @@
 package io.github.jack9761.MicroComputers.forge;
 
 import dev.architectury.platform.forge.EventBuses;
-import io.github.jack9761.MicroComputers.item.ModCreativeMode;
+import io.github.jack9761.MicroComputers.ModCreativeTab;
 import io.github.jack9761.MicroComputers.item.ModItem;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -18,7 +18,7 @@ public final class MicroComputersForge {
         EventBuses.registerModEventBus(MicroComputers.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
         IEventBus ModEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModItem.ITEMS.register();
-        ModCreativeMode.TABS.register();
+        ModCreativeTab.TABS.register();
         // Run our common setup.
         MicroComputers.init();
     }

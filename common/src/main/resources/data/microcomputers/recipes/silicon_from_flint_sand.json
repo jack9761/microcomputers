@@ -1,11 +1,11 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
+  "category": "redstone",
   "ingredients": [
     {"item": "minecraft:flint"},
-    {"item": "minecraft:sand"},
-    {"item": "minecraft:sand"},
-    {"item": "minecraft:sand"}
+    {"tag": "minecraft:sand"},
+    {"tag": "minecraft:sand"},
+    {"tag": "minecraft:sand"}
   ],
   "result": {
     "item": "microcomputers:silicon",

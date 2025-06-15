@@ -1,15 +1,15 @@
-package io.github.jack9761.MicroComputers.item;
+package io.github.jack9761.MicroComputers;
 
 import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
-import io.github.jack9761.MicroComputers.MicroComputers;
+import io.github.jack9761.MicroComputers.item.ModItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 
-public class ModCreativeMode {
+public class ModCreativeTab {
 //    public static final CreativeModeTab CREATIVE_MODE_TAB = new CreativeModeTab.Builder()
 //            /* Change to cable eventually */
 //            .icon(() -> new ItemStack(ModItem.SILICON.get()))
