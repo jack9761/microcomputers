@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {"item": "minecraft:book"},
+    {"item": "microcomputers:silicon"}
+  ],
+  "result": {
+    "item": "microcomputers:instruction_manual",
+    "count": 1
+  }
+}
