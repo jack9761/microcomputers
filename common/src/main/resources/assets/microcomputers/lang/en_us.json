@@ -1,5 +1,6 @@
 {
   "item.microcomputers.silicon": "Silicon",
   "item.microcomputers.instruction_manual": "MicroComputers Datasheet",
+  "screen.microcomputers.instruction_manual.title": "MicroComputers Datasheet",
   "creativetab.microcomputer": "MicroComputers"
 }

@@ -1,5 +1,6 @@
 {
   "item.microcomputers.silicon": "Silicio",
   "item.microcomputers.instruction_manual": "Ficha Técnica MicroComputers",
-  "creativetab.microcomputer": "MicroComputers"
+  "creativetab.microcomputer": "MicroComputers",
+  "screen.microcomputers.instruction_manual.title": "Ficha Técnica MicroComputers"
 }
