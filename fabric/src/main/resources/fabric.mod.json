@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "microcomputers",
   "version": "${version}",
-  "name": "MicroComputers",
+  "name": "Micro Computers",
   "description": "This is an example description! Tell everyone what your mod is about!",
   "authors": [
     "Me!"
@@ -16,10 +16,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.github.jack9761.MicroComputers.fabric.ExampleModFabric"
+      "io.github.jack9761.microcomputers.fabric.ExampleModFabric"
     ],
     "client": [
-      "io.github.jack9761.MicroComputers.fabric.client.ExampleModFabricClient"
+      "io.github.jack9761.microcomputers.fabric.client.ExampleModFabricClient"
     ]
   },
   "mixins": [

@@ -1,4 +1,4 @@
-package io.github.jack9761.MicroComputers.fabric.client;
+package io.github.jack9761.microcomputers.fabric.client;
 
 import net.fabricmc.api.ClientModInitializer;
 
