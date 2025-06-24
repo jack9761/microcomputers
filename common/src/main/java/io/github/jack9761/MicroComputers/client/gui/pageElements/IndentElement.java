@@ -1,5 +1,6 @@
-package io.github.jack9761.MicroComputers.client.gui;
+package io.github.jack9761.MicroComputers.client.gui.pageElements;
 
+import io.github.jack9761.MicroComputers.client.gui.InstructionManualScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;

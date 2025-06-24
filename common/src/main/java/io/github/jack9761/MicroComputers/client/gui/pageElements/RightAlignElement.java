@@ -1,4 +1,4 @@
-package io.github.jack9761.MicroComputers.client.gui;
+package io.github.jack9761.MicroComputers.client.gui.pageElements;
 
 import net.minecraft.network.chat.Component;
 

@@ -1,6 +1,8 @@
-package io.github.jack9761.MicroComputers.client.gui;
+package io.github.jack9761.MicroComputers.client.gui.pageElements;
 
 import dev.architectury.networking.NetworkManager;
+import io.github.jack9761.MicroComputers.client.gui.InstructionManualScreen;
+import io.github.jack9761.MicroComputers.client.gui.buttons.InvisibleButton;
 import io.github.jack9761.MicroComputers.networking.SetPagePacket;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
@@ -8,7 +10,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 

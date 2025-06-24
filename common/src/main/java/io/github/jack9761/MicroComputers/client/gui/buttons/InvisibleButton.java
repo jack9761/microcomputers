@@ -1,4 +1,4 @@
-package io.github.jack9761.MicroComputers.client.gui;
+package io.github.jack9761.MicroComputers.client.gui.buttons;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -8,7 +8,7 @@ import net.minecraft.network.chat.Component;
 
 @Environment(EnvType.CLIENT)
 public class InvisibleButton extends Button {
-    protected InvisibleButton(int x, int y, int width, int height, Component message, OnPress onPress) {
+    public InvisibleButton(int x, int y, int width, int height, Component message, OnPress onPress) {
         super(x, y, width, height, message, onPress, Button.DEFAULT_NARRATION);
     }
 

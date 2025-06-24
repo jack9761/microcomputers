@@ -2,14 +2,14 @@ package io.github.jack9761.MicroComputers.client.gui;
 
 import dev.architectury.networking.NetworkManager;
 import io.github.jack9761.MicroComputers.MicroComputers;
+import io.github.jack9761.MicroComputers.client.gui.buttons.ImageButton;
+import io.github.jack9761.MicroComputers.client.gui.pageElements.*;
 import io.github.jack9761.MicroComputers.networking.SetPagePacket;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -22,27 +22,24 @@ import java.util.regex.Pattern;
 
 @Environment(EnvType.CLIENT)
 public class InstructionManualScreen extends Screen {
-    public static final ResourceLocation MONOSPACE_FONT = new ResourceLocation(MicroComputers.MOD_ID,"monocraft");
+    private static final ResourceLocation MONOSPACE_FONT = new ResourceLocation(MicroComputers.MOD_ID,"monocraft");
+    private static final ResourceLocation PAGE_TURN_BUTTONS = new ResourceLocation(MicroComputers.MOD_ID, "textures/gui/page_turn_buttons.png");
+
     public int current_page;
-    public static int end_page = 2;
+    private static int end_page = 2;
 
     private final ArrayList<ArrayList<IPageElement>> pageContent = new ArrayList<ArrayList<IPageElement>>();
 
     private final ArrayList<AbstractWidget> widgetQueueforInit = new ArrayList<AbstractWidget>();
 
-
-    public Button next_page_button;
-    public Button prev_page_button;
-    public Button back_to_start_button;
+    public ImageButton next_page_button;
+    public ImageButton prev_page_button;
+    public ImageButton back_to_start_button;
 
     public InstructionManualScreen(int page) {
         super(Component.translatable("screen.microcomputers.instruction_manual.title"));
         current_page = page;
         parse_page(current_page);
-    }
-
-    public Font getFont(){
-        return this.font;
     }
 
     public void parse_page(int targetPage) {
@@ -90,29 +87,29 @@ public class InstructionManualScreen extends Screen {
     protected void init() {
         super.init();
         //Back to Start
-        this.back_to_start_button = this.addRenderableWidget(Button.builder(Component.literal("Back to Start"), (button) -> {
+        this.back_to_start_button = this.addRenderableWidget(new ImageButton(this.width / 2 - 74,this.height / 2 - 100,40,PAGE_TURN_BUTTONS,(button) -> {
             this.current_page=0;
             FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
             buf.writeInt(current_page);
             NetworkManager.sendToServer(SetPagePacket.PACKET_ID, buf);
             parse_page(current_page);
-        }).bounds(this.width / 2 - 122, this.height / 4 + 24, 50, 20).build());
+        }));
         //Next Page
-        this.next_page_button = this.addRenderableWidget(Button.builder(Component.literal("Next ->"), (button) -> {
+        this.next_page_button = this.addRenderableWidget(new ImageButton(this.width / 2 + 54,this.height / 2 +74,20,PAGE_TURN_BUTTONS,(button) -> {
             this.current_page++;
             FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
             buf.writeInt(current_page);
             NetworkManager.sendToServer(SetPagePacket.PACKET_ID, buf);
             parse_page(current_page);
-        }).bounds(this.width / 2 - 122, this.height / 4 + 44, 50, 20).build());
+        }));
         //Previous Page
-        this.prev_page_button = this.addRenderableWidget(Button.builder(Component.literal("<- Prev"), (button) -> {
-            this.current_page=this.current_page-1;
+        this.prev_page_button = this.addRenderableWidget(new ImageButton(this.width / 2 - 74,this.height / 2 +74,0,PAGE_TURN_BUTTONS,(button) -> {
+            this.current_page=current_page-1;
             FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
             buf.writeInt(current_page);
             NetworkManager.sendToServer(SetPagePacket.PACKET_ID, buf);
             parse_page(current_page);
-        }).bounds(this.width / 2 - 122, this.height / 4 + 64, 50, 20).build());
+        }));
         for (ArrayList<IPageElement> Lines : pageContent) {
             for (IPageElement line : Lines) {
                 line.init(this);
@@ -144,7 +141,7 @@ public class InstructionManualScreen extends Screen {
         int backgroundEndX = this.width / 2 + 74;
         int textEndX = backgroundEndX-4;
         int backgroundStartY = this.height / 2 - 100;
-        int textStartY = backgroundStartY + 12;
+        int textStartY = backgroundStartY + 20;
         int backgroundEndY = this.height / 2 +90;
         int textEndY = backgroundEndY - 4;
         int lineSpacing = font.lineHeight+2; // The magic number!

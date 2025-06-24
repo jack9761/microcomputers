@@ -1,5 +1,6 @@
-package io.github.jack9761.MicroComputers.client.gui;
+package io.github.jack9761.MicroComputers.client.gui.pageElements;
 
+import io.github.jack9761.MicroComputers.client.gui.InstructionManualScreen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
