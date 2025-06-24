@@ -4,9 +4,9 @@
   "creativetab.microcomputer": "MicroComputers",
   "screen.microcomputers.instruction_manual.title": "Ficha Técnica MicroComputers",
   "instruction_manual.page.0.title": "Índice",
-  "instruction_manual.page.0.contents": "Materiales\n[Link,1](Silicio)\n[Link,2](Ficha Técnica MicroComputers)",
+  "instruction_manual.page.0.contents": "Materiales\n[indent,10][Link,1](Silicio)[rightalign](1)\n[indent,10][Link,2](Ficha Técnica MicroComputers)[rightalign](2)",
   "instruction_manual.page.1.title": "Silicio",
   "instruction_manual.page.1.contents": "[recipe,silicon_from_flint_sand]",
-  "instruction_manual.page.2.title": "Ficha Técnica MicroComputers",
+  "instruction_manual.page.2.title": "Ficha Técnica",
   "instruction_manual.page.2.contents": "[recipe,instruction_manual_from_silicon_book]"
 }

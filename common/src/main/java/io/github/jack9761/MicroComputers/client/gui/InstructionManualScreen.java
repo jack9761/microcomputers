@@ -64,6 +64,12 @@ public class InstructionManualScreen extends Screen {
                     case "link":
                         linePageContent.add(new LinkElement(AffectedText, Integer.parseInt(CommandWithParams[1])));
                         break;
+                    case "rightalign":
+                        linePageContent.add(new RightAlignElement(AffectedText));
+                        break;
+                    case "indent":
+                        linePageContent.add(new IndentElement(Integer.parseInt(CommandWithParams[1])));
+                        break;
                     case "recipe":
                         //linePageContent.add(new RecipeElement(AffectedText));
                         break;
@@ -155,13 +161,25 @@ public class InstructionManualScreen extends Screen {
         int cursorY = textStartY;
         for (ArrayList<IPageElement> lines : pageContent) {
             int cursorX = textStartX;
+            Boolean drawLine = true;
             for (IPageElement element : lines) {
+                if(element instanceof RightAlignElement){
+                    cursorX = textEndX-element.getWidth();
+                    element.render(guiGraphics, this.font, cursorX, cursorY, mouseX, mouseY);
+                }
+//                else if (element instanceof Recipe ) {
+//
+//                }
+                else{
                 element.render(guiGraphics, this.font, cursorX, cursorY, mouseX, mouseY);
                 cursorX+= element.getWidth();
+                }
             }
             cursorY += lineSpacing;
-            guiGraphics.fill(textStartX,cursorY-3,textEndX+1,cursorY-2,lineColor);
-            guiGraphics.fill(textStartX,cursorY-2,textEndX,cursorY-1,underlineColor);
+            if (drawLine) {
+                guiGraphics.fill(textStartX, cursorY - 3, textEndX + 1, cursorY - 2, lineColor);
+                guiGraphics.fill(textStartX, cursorY - 2, textEndX, cursorY - 1, underlineColor);
+            }
         }
         super.render(guiGraphics, mouseX, mouseY, partialTick);
     }
