@@ -2,5 +2,11 @@
   "item.microcomputers.silicon": "Silicon",
   "item.microcomputers.instruction_manual": "MicroComputers Datasheet",
   "screen.microcomputers.instruction_manual.title": "MicroComputers Datasheet",
-  "creativetab.microcomputer": "MicroComputers"
+  "creativetab.microcomputer": "MicroComputers",
+  "instruction_manual.page.0.title": "Table of Contents",
+  "instruction_manual.page.0.contents": "Materials\n[link,1](Silicon)\n[link,2](Instruction Manual)",
+  "instruction_manual.page.1.title": "Silicon",
+  "instruction_manual.page.1.contents": "[recipe,silicon_from_flint_sand]",
+  "instruction_manual.page.2.title": "MicroComputers Datasheet",
+  "instruction_manual.page.2.contents": "[recipe,instruction_manual_from_silicon_book]"
 }

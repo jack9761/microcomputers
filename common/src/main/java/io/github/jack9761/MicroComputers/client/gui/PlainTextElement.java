@@ -1,0 +1,23 @@
+package io.github.jack9761.MicroComputers.client.gui;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
+
+@Environment(EnvType.CLIENT)
+public class PlainTextElement implements IPageElement {
+    private final Component text;
+    public PlainTextElement(String text) { this.text = Component.literal(text); }
+    public PlainTextElement(Component text) { this.text = text; }
+    public Component getText() { return this.text; }
+    
+    @Override public void init(InstructionManualScreen screen) {}
+    @Override public int getWidth() { return Minecraft.getInstance().font.width(this.text); }
+    @Override public int getHeight() { return Minecraft.getInstance().font.lineHeight; }
+    @Override public void render(GuiGraphics guiGraphics, Font font, int x, int y, int mouseX, int mouseY) {
+        guiGraphics.drawString(font, this.text, x, y, 0xFF000000,false);
+    }
+}

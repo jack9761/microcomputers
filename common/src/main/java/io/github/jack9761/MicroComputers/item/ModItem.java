@@ -11,5 +11,5 @@ import net.minecraft.world.item.Item;
 public class ModItem {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(MicroComputers.MOD_ID, Registries.ITEM);
     public static final RegistrySupplier<Item> SILICON = ITEMS.register("silicon",() -> new Item(new Item.Properties().arch$tab(ModCreativeTab.MICROCOMPUTERS_CREATIVE_TAB)));
-    public static final RegistrySupplier<Item> MANUAL = ITEMS.register("instruction_manual", ()-> new Item(new Item.Properties().arch$tab(ModCreativeTab.MICROCOMPUTERS_CREATIVE_TAB)));
+    public static final RegistrySupplier<Item> MANUAL = ITEMS.register("instruction_manual", ()-> new InstructionManualItem(new Item.Properties().arch$tab(ModCreativeTab.MICROCOMPUTERS_CREATIVE_TAB)));
 }
