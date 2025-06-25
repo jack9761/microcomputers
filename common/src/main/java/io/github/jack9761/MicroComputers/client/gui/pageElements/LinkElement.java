@@ -31,14 +31,7 @@ public class LinkElement implements IPageElement {
 
     @Override
     public void init(InstructionManualScreen screen) {
-        this.invisibleButton = new InvisibleButton(0,0,getWidth(),getHeight(),this.text,(press)->
-                {
-                    screen.current_page=this.targetPage;
-                    FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
-                    buf.writeInt(screen.current_page);
-                    NetworkManager.sendToServer(SetPagePacket.PACKET_ID, buf);
-                    screen.parse_page(this.targetPage);
-                });
+        this.invisibleButton = new InvisibleButton(0,0,getWidth(),getHeight(),this.text,(press)-> {screen.openPage(targetPage);});
         screen.AppendWidgetToQueue(this.invisibleButton);
     }
 

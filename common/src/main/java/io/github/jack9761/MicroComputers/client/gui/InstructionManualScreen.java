@@ -42,6 +42,14 @@ public class InstructionManualScreen extends Screen {
         parse_page(current_page);
     }
 
+    public void openPage(int page) {
+        this.current_page = page;
+        FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
+        buf.writeInt(this.current_page);
+        NetworkManager.sendToServer(SetPagePacket.PACKET_ID, buf);
+        this.rebuildWidgets();
+    }
+
     public void parse_page(int targetPage) {
         pageContent.clear();
         String[] StringLines = Component.translatable("instruction_manual.page." + current_page + ".contents").getString().split("\\n");
@@ -80,35 +88,23 @@ public class InstructionManualScreen extends Screen {
                 linePageContent.add(new PlainTextElement(lineString.substring(cursor)));
             }
         }
-        rebuildWidgets();
     }
 
     @Override
     protected void init() {
         super.init();
+        parse_page(current_page);
         //Back to Start
         this.back_to_start_button = this.addRenderableWidget(new ImageButton(this.width / 2 - 74,this.height / 2 - 100,40,PAGE_TURN_BUTTONS,(button) -> {
-            this.current_page=0;
-            FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
-            buf.writeInt(current_page);
-            NetworkManager.sendToServer(SetPagePacket.PACKET_ID, buf);
-            parse_page(current_page);
+            openPage(0);
         }));
         //Next Page
         this.next_page_button = this.addRenderableWidget(new ImageButton(this.width / 2 + 54,this.height / 2 +74,20,PAGE_TURN_BUTTONS,(button) -> {
-            this.current_page++;
-            FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
-            buf.writeInt(current_page);
-            NetworkManager.sendToServer(SetPagePacket.PACKET_ID, buf);
-            parse_page(current_page);
+            openPage(current_page+1);
         }));
         //Previous Page
         this.prev_page_button = this.addRenderableWidget(new ImageButton(this.width / 2 - 74,this.height / 2 +74,0,PAGE_TURN_BUTTONS,(button) -> {
-            this.current_page=current_page-1;
-            FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
-            buf.writeInt(current_page);
-            NetworkManager.sendToServer(SetPagePacket.PACKET_ID, buf);
-            parse_page(current_page);
+            openPage(current_page-1);
         }));
         for (ArrayList<IPageElement> Lines : pageContent) {
             for (IPageElement line : Lines) {
