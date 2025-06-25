@@ -155,6 +155,7 @@ public class InstructionManualScreen extends Screen {
         for (ArrayList<IPageElement> lines : pageContent) {
             int cursorX = textStartX;
             Boolean drawLine = true;
+            int lineheight=0;
             for (IPageElement element : lines) {
                 if(element instanceof RightAlignElement){
                     cursorX = textEndX-element.getWidth();
@@ -167,11 +168,13 @@ public class InstructionManualScreen extends Screen {
                 element.render(guiGraphics, this.font, cursorX, cursorY, mouseX, mouseY);
                 cursorX+= element.getWidth();
                 }
+                lineheight = Math.max(lineheight, element.getHeight());
             }
-            cursorY += lineSpacing;
+            cursorY = cursorY + lineheight;
             if (drawLine) {
-                guiGraphics.fill(textStartX, cursorY - 3, textEndX + 1, cursorY - 2, lineColor);
-                guiGraphics.fill(textStartX, cursorY - 2, textEndX, cursorY - 1, underlineColor);
+                guiGraphics.fill(textStartX, cursorY - 2, textEndX + 1, cursorY - 1, lineColor);
+                guiGraphics.fill(textStartX, cursorY-1, textEndX, cursorY, underlineColor);
+                cursorY=cursorY+1;
             }
         }
         super.render(guiGraphics, mouseX, mouseY, partialTick);
