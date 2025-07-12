@@ -76,7 +76,10 @@ public class InstructionManualScreen extends Screen {
                         linePageContent.add(new IndentElement(Integer.parseInt(CommandWithParams[1])));
                         break;
                     case "recipe":
-                        //linePageContent.add(new RecipeElement(AffectedText));
+                        linePageContent.add(new RecipeElement(CommandWithParams[1]));
+                        break;
+                    case "itemdisplay":
+                        linePageContent.add(new ItemDisplayElement(CommandWithParams[1]));
                         break;
                     default:
                         linePageContent.add(new PlainTextElement(lineString.substring(matcher.start(), matcher.end())));
@@ -161,12 +164,12 @@ public class InstructionManualScreen extends Screen {
                     cursorX = textEndX-element.getWidth();
                     element.render(guiGraphics, this.font, cursorX, cursorY, mouseX, mouseY);
                 }
-//                else if (element instanceof Recipe ) {
-//
-//                }
                 else{
-                element.render(guiGraphics, this.font, cursorX, cursorY, mouseX, mouseY);
-                cursorX+= element.getWidth();
+                    element.render(guiGraphics, this.font, cursorX, cursorY, mouseX, mouseY);
+                    cursorX+= element.getWidth();
+                }
+                if (element instanceof RecipeElement) {
+                    drawLine = false;
                 }
                 lineheight = Math.max(lineheight, element.getHeight());
             }
