@@ -45,6 +45,9 @@ public class RecipeElement implements IPageElement {
             for(int row = 0; row<GridSizeX; row++){
                 for(int column = 0; column<GridSizeY; column++) {
                     int index = row * GridSizeX + column;
+                    if(index >= foundRecipe.getIngredients().size()){
+                        break;
+                    }
                     ItemStack[] ingredient = foundRecipe.getIngredients().get(index).getItems();
                     if(ingredient.length != 0){
                         ingedientDisplayElementGrid.add(new ItemDisplayElement(ingredient[0].getItem()));
