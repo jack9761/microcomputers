@@ -4,9 +4,9 @@
   "screen.microcomputers.instruction_manual.title": "MicroComputers Datasheet",
   "creativetab.microcomputer": "MicroComputers",
   "instruction_manual.page.0.title": "Table of Contents",
-  "instruction_manual.page.0.contents": "Materials\n[indent,10][link,1](Silicon)[rightalign](1)\n[indent,10][link,2](Datasheet)[rightalign](2)",
+  "instruction_manual.page.0.contents": "Basics\n[indent,10][link,1](Silicon)[rightalign](1)\n[indent,10][link,2](Datasheet)[rightalign](2)\nMicrocomputers\nAccessories\nAddon Cards",
   "instruction_manual.page.1.title": "Silicon",
-  "instruction_manual.page.1.contents": "[itemdisplay,microcomputers:silicon]\n[recipe,microcomputers:silicon_from_flint_sand]",
+  "instruction_manual.page.1.contents": "[recipe,microcomputers:silicon_from_flint_sand]\nSilicon is a basic component used to craft MicroComputers and addon cards.",
   "instruction_manual.page.2.title": "Datasheet",
-  "instruction_manual.page.2.contents": "[recipe,instruction_manual_from_silicon_book]"
+  "instruction_manual.page.2.contents": "[recipe,microcomputers:instruction_manual_from_silicon_book]\nThe datasheet explains everything you need to know about Microcomputers.\nYou're reading it right now!"
 }

@@ -8,14 +8,18 @@ import io.github.jack9761.MicroComputers.networking.SetPagePacket;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FormattedCharSequence;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,6 +39,15 @@ public class InstructionManualScreen extends Screen {
     public ImageButton next_page_button;
     public ImageButton prev_page_button;
     public ImageButton back_to_start_button;
+
+    public static Component formattedCharSequenceToComponent(FormattedCharSequence seq) {
+        StringBuilder sb = new StringBuilder();
+        seq.accept((index, style, codePoint) -> {
+            sb.appendCodePoint(codePoint);
+            return true;
+        });
+        return Component.literal(sb.toString());
+    }
 
     public InstructionManualScreen(int page) {
         super(Component.translatable("screen.microcomputers.instruction_manual.title"));
@@ -81,6 +94,8 @@ public class InstructionManualScreen extends Screen {
                     case "itemdisplay":
                         linePageContent.add(new ItemDisplayElement(CommandWithParams[1]));
                         break;
+                    case "literal":
+                        linePageContent.add(new LiteralTextElement(AffectedText));
                     default:
                         linePageContent.add(new PlainTextElement(lineString.substring(matcher.start(), matcher.end())));
                         break;
@@ -90,6 +105,33 @@ public class InstructionManualScreen extends Screen {
             if(cursor < lineString.length()){
                 linePageContent.add(new PlainTextElement(lineString.substring(cursor)));
             }
+        }
+        //Word wrapping
+        for (int lineindex = 0; lineindex < pageContent.size(); lineindex++) {
+            int cursorX = 0;
+            for (IPageElement PageElement :pageContent.get(lineindex)) {
+                if(cursorX+PageElement.getWidth()>140){
+                    if (PageElement instanceof PlainTextElement){
+                        List<FormattedCharSequence> splittext = Minecraft.getInstance().font.split(((PlainTextElement) PageElement).getText(),140-cursorX);
+                        ((PlainTextElement) PageElement).setText(formattedCharSequenceToComponent(splittext.get(0)));
+                        pageContent.add(lineindex+1,new ArrayList<IPageElement>());
+                        StringBuilder newpagetext = new StringBuilder();
+                        for (int i = 1; i < splittext.size(); i++) {
+                            newpagetext.append(formattedCharSequenceToComponent(splittext.get(i)).getString());
+                            if (i != splittext.size() - 1) {
+                                newpagetext.append(" ");
+                            }
+                        }
+                        pageContent.get(lineindex+1).add(new PlainTextElement(String.valueOf(newpagetext)));
+                        break;
+                    }
+                    else{
+                        Minecraft.getInstance().player.sendSystemMessage(Component.literal("Page:"+current_page+" Line:"+lineindex+" is too long."));
+                    }
+                }
+                cursorX+=PageElement.getWidth();
+            }
+
         }
     }
 

@@ -10,11 +10,12 @@ import net.minecraft.network.chat.Component;
 
 @Environment(EnvType.CLIENT)
 public class PlainTextElement implements IPageElement {
-    private final Component text;
+    private Component text;
     public PlainTextElement(String text) { this.text = Component.literal(text); }
     public PlainTextElement(Component text) { this.text = text; }
     public Component getText() { return this.text; }
-    
+    public void setText(Component updatedText){this.text = updatedText;}
+    public void setText(String updatedText){this.text = Component.literal(updatedText);}
     @Override public void init(InstructionManualScreen screen) {}
     @Override public int getWidth() { return Minecraft.getInstance().font.width(this.text); }
     @Override public int getHeight() { return Minecraft.getInstance().font.lineHeight; }
