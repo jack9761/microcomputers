@@ -4,7 +4,9 @@ import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import io.github.jack9761.MicroComputers.MicroComputers;
 import io.github.jack9761.MicroComputers.ModCreativeTab;
+import io.github.jack9761.MicroComputers.block.ModBlock;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 
 
@@ -12,4 +14,5 @@ public class ModItem {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(MicroComputers.MOD_ID, Registries.ITEM);
     public static final RegistrySupplier<Item> SILICON = ITEMS.register("silicon",() -> new Item(new Item.Properties().arch$tab(ModCreativeTab.MICROCOMPUTERS_CREATIVE_TAB)));
     public static final RegistrySupplier<Item> MANUAL = ITEMS.register("instruction_manual", ()-> new InstructionManualItem(new Item.Properties().arch$tab(ModCreativeTab.MICROCOMPUTERS_CREATIVE_TAB)));
+    public static final RegistrySupplier<Item> MICROCOMPUTER_ITEM = ITEMS.register("microcomputer", ()-> new BlockItem(ModBlock.MICROCOMPUTER_BLOCK.get(), new Item.Properties().arch$tab(ModCreativeTab.MICROCOMPUTERS_CREATIVE_TAB)));
 }

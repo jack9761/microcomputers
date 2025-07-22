@@ -185,7 +185,7 @@ public class InstructionManualScreen extends Screen {
         int textStartY = backgroundStartY + 20;
         int backgroundEndY = this.height / 2 +90;
         int textEndY = backgroundEndY - 4;
-        int lineSpacing = font.lineHeight+2; // The magic number!
+        int lineSpacing = font.lineHeight+2;
         int lineColor = 0xFF707070; // A light grey color
         int underlineColor = 0xFFB0B0B0; // Lighter grey
         //Background
