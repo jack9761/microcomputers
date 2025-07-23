@@ -3,6 +3,7 @@ package io.github.jack9761.MicroComputers.forge;
 import dev.architectury.platform.forge.EventBuses;
 import io.github.jack9761.MicroComputers.ModCreativeTab;
 import io.github.jack9761.MicroComputers.block.ModBlock;
+import io.github.jack9761.MicroComputers.block.entity.ModBlockEntity;
 import io.github.jack9761.MicroComputers.client.MicroComputersClient;
 import io.github.jack9761.MicroComputers.item.ModItem;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -23,6 +24,7 @@ public final class MicroComputersForge {
         ModItem.ITEMS.register();
         ModBlock.BLOCKS.register();
         ModCreativeTab.TABS.register();
+        ModBlockEntity.BLOCK_ENTITIES.register();
         ModEventBus.addListener(this::onClientSetup);
         // Run our common setup.
         MicroComputers.init();
