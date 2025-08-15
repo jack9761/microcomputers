@@ -1,36 +1,120 @@
 package io.github.jack9761.MicroComputers.block.entity;
 
-import io.github.jack9761.MicroComputers.inventory.IItemHandler;
-import io.github.jack9761.MicroComputers.inventory.InventoryUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 
-public class MicroComputerBlockEntity extends BlockEntity implements MenuProvider {
+public class MicroComputerBlockEntity extends BaseContainerBlockEntity implements MenuProvider {
 
-    private final IItemHandler addonSlots;
+    public static final int ADDON_SLOTS = 2;
+
+    private NonNullList<ItemStack> addonList;
 
     public MicroComputerBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntity.MICROCOMPUTER_BLOCK_ENTITY.get(), pos, blockState);
-        this.addonSlots = InventoryUtils.createHandler(2);
-        int i = 1;
+        this.addonList = NonNullList.withSize(ADDON_SLOTS,ItemStack.EMPTY);
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        ContainerHelper.saveAllItems(tag, this.addonList);
+    }
+
+    @Override
+    public void load(CompoundTag nbt) {
+        super.load(nbt);
+        ContainerHelper.loadAllItems(nbt, this.addonList);
+    }
+
+    @Override
+    public int getContainerSize() {
+        return ADDON_SLOTS;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return this.addonList.stream().allMatch(ItemStack::isEmpty);
+    }
+
+    @Override
+    public ItemStack getItem(int slot) {
+        return this.addonList.get(slot);
+    }
+
+    @Override
+    public boolean canPlaceItem(int index, ItemStack stack) {
+        return super.canPlaceItem(index, stack);
+    }
+
+    @Override
+    public ItemStack removeItem(int slot, int amount) {
+        return ContainerHelper.removeItem(addonList,slot,amount);
+    }
+
+    @Override
+    public ItemStack removeItemNoUpdate(int slot) {
+        return ContainerHelper.takeItem(addonList,slot);
+    }
+
+    @Override
+    public int getMaxStackSize() {
+        return 1;
+    }
+
+    @Override
+    public void setItem(int slot, ItemStack stack) {
+        this.addonList.set(slot,stack);
+        if(!stack.isEmpty() && stack.getCount() > this.getMaxStackSize()){
+            stack.setCount(this.getMaxStackSize());
+        }
+    }
+
+    @Override
+    public boolean stillValid(Player player) {
+        return Container.stillValidBlockEntity(this,player);
+    }
+
+    @Override
+    public void clearContent() {
+        this.addonList.clear();
     }
 
     @Override
     public Component getDisplayName() {
-        return null;
+        return Component.translatable("blockentity.microcomputers.microcomputer");
     }
 
     @Override
-    public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
+    protected Component getDefaultName() {
+        return Component.translatable("blockentity.microcomputers.microcomputer");
+    }
+
+    @Override
+    protected AbstractContainerMenu createMenu(int containerId, Inventory inventory) {
         return null;
     }
+
+    public static class Ticker<T extends BlockEntity> implements BlockEntityTicker<T>{
+        @Override
+        public void tick(Level level, BlockPos blockPos, BlockState blockState, T blockEntity) {
+
+        }
+    }
+
 }
