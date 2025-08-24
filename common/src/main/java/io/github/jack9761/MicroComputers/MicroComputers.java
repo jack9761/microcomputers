@@ -13,9 +13,10 @@ public final class MicroComputers {
         //Networking
         NetworkManager.registerReceiver(NetworkManager.Side.C2S,SetPagePacket.PACKET_ID, (buf,context) -> {
             Player player = context.getPlayer();
+            SetPagePacket packet = SetPagePacket.read(buf);
             if(player != null){
                 if(player.getMainHandItem().getItem() instanceof InstructionManualItem) {
-                    player.getMainHandItem().getTag().putInt(InstructionManualItem.PAGE_NBT_TAG, buf.readInt());
+                    player.getMainHandItem().getTag().putInt(InstructionManualItem.PAGE_NBT_TAG, packet.pageNumber());
                 }
             }
         });

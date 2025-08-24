@@ -5,7 +5,6 @@ import io.github.jack9761.MicroComputers.MicroComputers;
 import io.github.jack9761.MicroComputers.client.gui.buttons.ImageButton;
 import io.github.jack9761.MicroComputers.client.gui.pageElements.*;
 import io.github.jack9761.MicroComputers.networking.SetPagePacket;
-import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -14,7 +13,6 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 
@@ -57,8 +55,8 @@ public class InstructionManualScreen extends Screen {
 
     public void openPage(int page) {
         this.current_page = page;
-        FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
-        buf.writeInt(this.current_page);
+        SetPagePacket packet = new SetPagePacket(page);
+        FriendlyByteBuf buf =  packet.write();
         NetworkManager.sendToServer(SetPagePacket.PACKET_ID, buf);
         this.rebuildWidgets();
     }
