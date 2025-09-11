@@ -1,7 +1,12 @@
 package io.github.jack9761.MicroComputers.block;
 
+import dev.architectury.event.events.common.InteractionEvent;
 import io.github.jack9761.MicroComputers.block.entity.MicroComputerBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -11,6 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -22,6 +28,12 @@ import java.util.stream.Stream;
 public class MicroComputerBlock extends BaseEntityBlock {
 
     private static VoxelShape COLLISON_SHAPE = Block.box(0,0,0,16,16,16);
+
+    public static enum SideTexture{
+        BLANK,
+        REDSTONE,
+        CABLE
+    }
 
 //    private static VoxelShape OLD_COLLISON_SHAPE = Stream.of(
 //        Block.box(0, 0, 2, 16, 16, 14),
@@ -41,6 +53,7 @@ public class MicroComputerBlock extends BaseEntityBlock {
 
     public MicroComputerBlock(Properties properties) {
         super(properties);
+        //InteractionEvent.RIGHT_CLICK_BLOCK.register(this);
     }
 
     @Override
@@ -60,11 +73,25 @@ public class MicroComputerBlock extends BaseEntityBlock {
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return super.getTicker(level, state, blockEntityType);
+        return new MicroComputerBlockEntity.Ticker<>();
     }
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new MicroComputerBlockEntity(pos,state);
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if(player.isShiftKeyDown()){
+            return InteractionResult.PASS;
+        }
+        if(!level.isClientSide()){
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if(blockEntity instanceof MicroComputerBlockEntity){
+                player.openMenu((MenuProvider) blockEntity);
+            }
+        }
+        return InteractionResult.SUCCESS;
     }
 }

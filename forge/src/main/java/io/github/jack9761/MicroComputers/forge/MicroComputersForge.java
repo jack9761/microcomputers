@@ -2,6 +2,7 @@ package io.github.jack9761.MicroComputers.forge;
 
 import dev.architectury.platform.forge.EventBuses;
 import io.github.jack9761.MicroComputers.ModCreativeTab;
+import io.github.jack9761.MicroComputers.ModMenu;
 import io.github.jack9761.MicroComputers.block.ModBlock;
 import io.github.jack9761.MicroComputers.block.entity.ModBlockEntity;
 import io.github.jack9761.MicroComputers.client.MicroComputersClient;
@@ -25,6 +26,7 @@ public final class MicroComputersForge {
         ModBlock.BLOCKS.register();
         ModCreativeTab.TABS.register();
         ModBlockEntity.BLOCK_ENTITIES.register();
+        ModMenu.MENUS.register();
         ModEventBus.addListener(this::onClientSetup);
         // Run our common setup.
         MicroComputers.init();

@@ -1,9 +1,13 @@
 package io.github.jack9761.MicroComputers.block.entity;
 
+import dev.architectury.networking.NetworkManager;
+import io.github.jack9761.MicroComputers.engine.MicroComputerEngine;
+import io.github.jack9761.MicroComputers.networking.MicroComputerS2C;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.MenuProvider;
@@ -16,10 +20,22 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.HashSet;
 
 
 public class MicroComputerBlockEntity extends BaseContainerBlockEntity implements MenuProvider {
+
+    public static enum MicroComputerState{
+        STOPPED,
+        EXECUTING,
+        BLOCKED_WRITE,
+        BLOCKED_READ
+    }
+
+    private MicroComputerEngine computerEngine;
+
+    private HashSet<ServerPlayer> watchingplayers;
 
     public static final int ADDON_SLOTS = 2;
 
@@ -28,19 +44,32 @@ public class MicroComputerBlockEntity extends BaseContainerBlockEntity implement
     public MicroComputerBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntity.MICROCOMPUTER_BLOCK_ENTITY.get(), pos, blockState);
         this.addonList = NonNullList.withSize(ADDON_SLOTS,ItemStack.EMPTY);
+        watchingplayers = new HashSet<ServerPlayer>();
+        computerEngine = new MicroComputerEngine();
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
         ContainerHelper.saveAllItems(tag, this.addonList);
+        tag.put("microcomputer_engine",computerEngine.serializeCompoundTag());
     }
 
     @Override
     public void load(CompoundTag nbt) {
+        if(level.isClientSide()){
+
+        }
         super.load(nbt);
         ContainerHelper.loadAllItems(nbt, this.addonList);
+        computerEngine = MicroComputerEngine.microComputerEnginefromCompoundTag((CompoundTag) nbt.get("microcomputer_engine"));
     }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        return super.getUpdateTag();
+    }
+
 
     @Override
     public int getContainerSize() {
@@ -107,14 +136,24 @@ public class MicroComputerBlockEntity extends BaseContainerBlockEntity implement
 
     @Override
     protected AbstractContainerMenu createMenu(int containerId, Inventory inventory) {
-        return null;
+        return new MicroComputerMenu(containerId,inventory);
     }
 
     public static class Ticker<T extends BlockEntity> implements BlockEntityTicker<T>{
         @Override
         public void tick(Level level, BlockPos blockPos, BlockState blockState, T blockEntity) {
-
+            if(blockEntity instanceof MicroComputerBlockEntity){
+                MicroComputerBlockEntity microComputerBlockEntity = (MicroComputerBlockEntity) blockEntity;
+                if(microComputerBlockEntity.computerEngine!=null){
+                    microComputerBlockEntity.computerEngine.step();
+                }
+            }
         }
     }
 
+    public void SyncS2C(ServerPlayer player){
+        MicroComputerS2C packet = new MicroComputerS2C(computerEngine.serializeCompoundTag());
+        NetworkManager.sendToPlayer(player,MicroComputerS2C.PACKET_ID,packet.write());
+        watchingplayers.add(player);
+    }
 }
