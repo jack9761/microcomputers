@@ -1,0 +1,39 @@
+package io.github.jack9761.MicroComputers.forge.client;
+
+import io.github.jack9761.MicroComputers.block.entity.MicroComputerBlockEntity;
+import io.github.jack9761.MicroComputers.client.commonMicroComputerBakedModel;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.model.data.ModelData;
+
+import javax.annotation.Nonnull;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.List;
+
+import static io.github.jack9761.MicroComputers.forge.MicroComputerBlockEntityForge.sideStates;
+@OnlyIn(Dist.CLIENT)
+public class MicroComputerBakedModelForge extends commonMicroComputerBakedModel {
+
+    public MicroComputerBakedModelForge(EnumMap<MicroComputerBlockEntity.MicroComputerTextures, TextureAtlasSprite> TEXTURE_MAP, List<BakedQuad> staticQuads, EnumMap<Direction, BakedQuad> dynamicQuads) {
+        super(TEXTURE_MAP, staticQuads, dynamicQuads);
+    }
+
+    @Nonnull
+    @Override
+    public List<BakedQuad> getQuads(BlockState state, Direction side, @Nonnull RandomSource rand, @Nonnull ModelData extraData, RenderType renderType) {
+        if (extraData.has(sideStates)) {
+            EnumMap<Direction, MicroComputerBlockEntity.MicroComputerTextures> textureMap = extraData.get(sideStates);
+            if (textureMap != null) {
+                return this.getAgnosticQuads(textureMap, side, rand);
+            }
+        }
+        return Collections.emptyList();
+    }
+}

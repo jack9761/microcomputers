@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": { "model": "microcomputers:block/microcomputer" }
+    "": { "model": "microcomputers:block/microcomputer_dynamic" }
   }
 }

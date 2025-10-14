@@ -7,6 +7,9 @@ import io.github.jack9761.MicroComputers.block.ModBlock;
 import io.github.jack9761.MicroComputers.block.entity.ModBlockEntity;
 import io.github.jack9761.MicroComputers.client.MicroComputersClient;
 import io.github.jack9761.MicroComputers.item.ModItem;
+import io.github.jack9761.MicroComputers.forge.client.MicroComputerModelLoader;
+import io.github.jack9761.MicroComputers.client.MicroComputersClient;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -19,7 +22,6 @@ public final class MicroComputersForge {
     //Items
     //Creative Tab
     public MicroComputersForge() {
-        // Submit our event bus to let Architectury API register our content on the right time.
         EventBuses.registerModEventBus(MicroComputers.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
         IEventBus ModEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModItem.ITEMS.register();
@@ -28,9 +30,14 @@ public final class MicroComputersForge {
         ModBlockEntity.BLOCK_ENTITIES.register();
         ModMenu.MENUS.register();
         ModEventBus.addListener(this::onClientSetup);
-        // Run our common setup.
+        ModEventBus.addListener(this::onRegisterGeometryLoaders);
         MicroComputers.init();
     }
+
+    private void onRegisterGeometryLoaders(final ModelEvent.RegisterGeometryLoaders event) {
+        event.register(MicroComputersClient.LOADER_ID.toString(), new MicroComputerModelLoader());
+    }
+
     private void onClientSetup(final FMLClientSetupEvent event){
         MicroComputersClient.init();
     }

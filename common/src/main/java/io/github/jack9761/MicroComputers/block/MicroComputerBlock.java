@@ -2,7 +2,9 @@ package io.github.jack9761.MicroComputers.block;
 
 import dev.architectury.event.events.common.InteractionEvent;
 import io.github.jack9761.MicroComputers.block.entity.MicroComputerBlockEntity;
+import
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -16,6 +18,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -29,10 +33,22 @@ public class MicroComputerBlock extends BaseEntityBlock {
 
     private static VoxelShape COLLISON_SHAPE = Block.box(0,0,0,16,16,16);
 
-    public static enum SideTexture{
+    public static final EnumProperty<SideTexture> UP = EnumProperty.create("up", SideTexture.class);
+    public static final EnumProperty<SideTexture> DOWN = EnumProperty.create("down", SideTexture.class);
+    public static final EnumProperty<SideTexture> NORTH = EnumProperty.create("north", SideTexture.class);
+    public static final EnumProperty<SideTexture> SOUTH = EnumProperty.create("south", SideTexture.class);
+    public static final EnumProperty<SideTexture> EAST = EnumProperty.create("east", SideTexture.class);
+    public static final EnumProperty<SideTexture> WEST = EnumProperty.create("west", SideTexture.class);
+
+    public static enum SideTexture implements StringRepresentable {
         BLANK,
         REDSTONE,
-        CABLE
+        CABLE;
+
+        @Override
+        public String getSerializedName() {
+            return name().toLowerCase();
+        }
     }
 
 //    private static VoxelShape OLD_COLLISON_SHAPE = Stream.of(
@@ -53,7 +69,20 @@ public class MicroComputerBlock extends BaseEntityBlock {
 
     public MicroComputerBlock(Properties properties) {
         super(properties);
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(UP, SideTexture.BLANK)
+                .setValue(DOWN, SideTexture.BLANK)
+                .setValue(NORTH, SideTexture.BLANK)
+                .setValue(SOUTH, SideTexture.BLANK)
+                .setValue(EAST, SideTexture.BLANK)
+                .setValue(WEST, SideTexture.BLANK));
+
         //InteractionEvent.RIGHT_CLICK_BLOCK.register(this);
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(UP, DOWN, NORTH, SOUTH, EAST, WEST);
     }
 
     @Override

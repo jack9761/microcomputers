@@ -4,6 +4,7 @@ import dev.architectury.networking.NetworkManager;
 import io.github.jack9761.MicroComputers.engine.MicroComputerEngine;
 import io.github.jack9761.MicroComputers.networking.MicroComputerS2C;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.EnumMap;
 import java.util.HashSet;
 
 
@@ -33,6 +35,27 @@ public class MicroComputerBlockEntity extends BaseContainerBlockEntity implement
         BLOCKED_READ
     }
 
+    public static enum MicroComputerTextures{
+        BLANK,
+        WIRE,
+        REDSTONE_0,
+        REDSTONE_1,
+        REDSTONE_2,
+        REDSTONE_3,
+        REDSTONE_4,
+        REDSTONE_5,
+        REDSTONE_6,
+        REDSTONE_7,
+        REDSTONE_8,
+        REDSTONE_9,
+        REDSTONE_10,
+        REDSTONE_11,
+        REDSTONE_12,
+        REDSTONE_13,
+        REDSTONE_14,
+        REDSTONE_15
+    }
+
     private MicroComputerEngine computerEngine;
 
     private HashSet<ServerPlayer> watchingplayers;
@@ -40,6 +63,8 @@ public class MicroComputerBlockEntity extends BaseContainerBlockEntity implement
     public static final int ADDON_SLOTS = 2;
 
     private NonNullList<ItemStack> addonList;
+
+    protected EnumMap<Direction,MicroComputerTextures> clientTextureMap;
 
     public MicroComputerBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntity.MICROCOMPUTER_BLOCK_ENTITY.get(), pos, blockState);
@@ -67,6 +92,7 @@ public class MicroComputerBlockEntity extends BaseContainerBlockEntity implement
 
     @Override
     public CompoundTag getUpdateTag() {
+
         return super.getUpdateTag();
     }
 
