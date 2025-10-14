@@ -5,7 +5,7 @@
     {"item": "minecraft:flint"},
     {"tag": "minecraft:sand"},
     {"tag": "minecraft:sand"},
-    {"tag": "minecraft:sand"}
+    {"tag": "minecraft:quartz"}
   ],
   "result": {
     "item": "microcomputers:silicon",
