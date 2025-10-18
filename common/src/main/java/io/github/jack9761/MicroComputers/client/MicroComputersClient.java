@@ -10,8 +10,8 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.RedStoneWireBlock;
 
-import java.util.EnumMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -31,7 +31,18 @@ public class MicroComputersClient {
     public static void init() {
         RenderTypeRegistry.register(RenderType.cutout(), ModBlock.MICROCOMPUTER_BLOCK.get());
         ColorHandlerRegistry.registerBlockColors(((blockState, blockAndTintGetter, blockPos, i) -> {
-            Optional<MicroComputerBlockEntity> MicroComputer = blockAndTintGetter.getBlockEntity(blockPos, ModBlockEntity.MICROCOMPUTER_BLOCK_ENTITY);
-        }),ModBlock.MICROCOMPUTER_BLOCK);
+            Optional<MicroComputerBlockEntity> BlockEntityOptional = blockAndTintGetter.getBlockEntity(blockPos, ModBlockEntity.MICROCOMPUTER_BLOCK_ENTITY.get());
+            if(BlockEntityOptional.isPresent()){
+                MicroComputerBlockEntity.MicroComputerTextures texture = BlockEntityOptional.get().clientTextureMap.get(TintIndexDirection.get(i));
+                if(texture==null||texture==MicroComputerBlockEntity.MicroComputerTextures.BLANK||texture==MicroComputerBlockEntity.MicroComputerTextures.CABLE){
+                    //Nothing should happen
+                    return -1;
+                }
+                else{
+                    return RedStoneWireBlock.getColorForPower(Integer.parseInt(texture.toString().substring(9)));
+                }
+            }
+            return -1;
+        }),ModBlock.MICROCOMPUTER_BLOCK.get());
     }
 }

@@ -37,7 +37,7 @@ public class MicroComputerBlockEntity extends BaseContainerBlockEntity implement
 
     public static enum MicroComputerTextures{
         BLANK,
-        WIRE,
+        CABLE,
         REDSTONE_0,
         REDSTONE_1,
         REDSTONE_2,
@@ -64,7 +64,7 @@ public class MicroComputerBlockEntity extends BaseContainerBlockEntity implement
 
     private NonNullList<ItemStack> addonList;
 
-    protected EnumMap<Direction,MicroComputerTextures> clientTextureMap;
+    public EnumMap<Direction,MicroComputerTextures> clientTextureMap;
 
     public MicroComputerBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntity.MICROCOMPUTER_BLOCK_ENTITY.get(), pos, blockState);
