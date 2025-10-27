@@ -20,13 +20,13 @@ public class ModPackets {
             Player player = context.getPlayer();
             UnsubscribePlayerC2S packet = UnsubscribePlayerC2S.read(buf);
             if(player != null){
-                if(packet.BlockEntityPosition() != null && player.level.getBlockEntity(packet.BlockEntityPosition()) != null){
-                    if(player.level.getBlockEntity(packet.BlockEntityPosition()) instanceof MicroComputerBlockEntity){
+                if(packet.BlockEntityPosition() != null && player.level().getBlockEntity(packet.BlockEntityPosition()) != null){
+                    if(player.level().getBlockEntity(packet.BlockEntityPosition()) instanceof MicroComputerBlockEntity){
 
                     }
                 }
             }
-        }
+        });
     }
 
     public static void registerS2CPackets(){

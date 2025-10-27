@@ -2,7 +2,6 @@ package io.github.jack9761.MicroComputers.block;
 
 import dev.architectury.event.events.common.InteractionEvent;
 import io.github.jack9761.MicroComputers.block.entity.MicroComputerBlockEntity;
-import
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;

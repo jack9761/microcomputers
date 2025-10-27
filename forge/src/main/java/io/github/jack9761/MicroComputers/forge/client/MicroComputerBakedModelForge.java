@@ -4,7 +4,7 @@ import io.github.jack9761.MicroComputers.block.entity.MicroComputerBlockEntity;
 import io.github.jack9761.MicroComputers.client.commonMicroComputerBakedModel;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,8 +21,8 @@ import static io.github.jack9761.MicroComputers.forge.MicroComputerBlockEntityFo
 @OnlyIn(Dist.CLIENT)
 public class MicroComputerBakedModelForge extends commonMicroComputerBakedModel {
 
-    public MicroComputerBakedModelForge(EnumMap<MicroComputerBlockEntity.MicroComputerTextures, TextureAtlasSprite> TEXTURE_MAP, List<BakedQuad> staticQuads, EnumMap<Direction, BakedQuad> dynamicQuads) {
-        super(TEXTURE_MAP, staticQuads, dynamicQuads);
+    public MicroComputerBakedModelForge(List<BakedQuad> staticQuads, EnumMap<Direction, EnumMap<MicroComputerBlockEntity.MicroComputerTextureBasic, BakedQuad>> dynamicQuads, EnumMap<Direction, BakedQuad> overlayQuads, BakedModel staticModel) {
+        super(staticQuads, dynamicQuads, overlayQuads, staticModel);
     }
 
     @Nonnull
@@ -34,6 +34,6 @@ public class MicroComputerBakedModelForge extends commonMicroComputerBakedModel 
                 return this.getAgnosticQuads(textureMap, side, rand);
             }
         }
-        return Collections.emptyList();
+        return staticModelBaked.getQuads(state, side, rand, extraData, renderType);
     }
 }

@@ -1,5 +1,6 @@
 package io.github.jack9761.MicroComputers.client;
 
+import io.github.jack9761.MicroComputers.MicroComputers;
 import io.github.jack9761.MicroComputers.block.entity.MicroComputerBlockEntity;
 
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -10,23 +11,49 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.List;
-public abstract class commonMicroComputerBakedModel implements BakedModel {
-    private final EnumMap<MicroComputerBlockEntity.MicroComputerTextures, TextureAtlasSprite> TEXTURE_MAP;
-    private final List<BakedQuad> staticQuads;
-    private final EnumMap<Direction, BakedQuad> dynamicQuads;
 
-    public commonMicroComputerBakedModel(EnumMap<MicroComputerBlockEntity.MicroComputerTextures, TextureAtlasSprite> TEXTURE_MAP, List<BakedQuad> staticQuads, EnumMap<Direction, BakedQuad> dynamicQuads) {
-        this.TEXTURE_MAP = TEXTURE_MAP;
+import java.util.*;
+
+public abstract class commonMicroComputerBakedModel implements BakedModel {
+    public static final Map<Integer, Direction> TintIndexDirectionMap = Map.of(
+            0, Direction.DOWN,
+            1, Direction.UP,
+            2, Direction.NORTH,
+            3, Direction.SOUTH,
+            4, Direction.WEST,
+            5, Direction.EAST
+    );
+    private final List<BakedQuad> staticQuads;
+    private final EnumMap<Direction, EnumMap<MicroComputerBlockEntity.MicroComputerTextureBasic, BakedQuad>> dynamicQuads;
+    private final EnumMap<Direction, BakedQuad> overlayQuads;
+    protected final BakedModel staticModelBaked;
+
+    public commonMicroComputerBakedModel(List<BakedQuad> staticQuads, EnumMap<Direction, EnumMap<MicroComputerBlockEntity.MicroComputerTextureBasic, BakedQuad>> dynamicQuads, EnumMap<Direction, BakedQuad> overlayQuads, BakedModel staticModel) {
         this.staticQuads = staticQuads;
         this.dynamicQuads = dynamicQuads;
+        this.overlayQuads = overlayQuads;
+        this.staticModelBaked = staticModel;
+
     }
 
     public List<BakedQuad> getAgnosticQuads(EnumMap<Direction, MicroComputerBlockEntity.MicroComputerTextures> sideStates, Direction side, RandomSource rand) {
-
-        return Collections.emptyList();
+        if(side!=null){
+            MicroComputers.LOGGER.info("getAgnosticQuads called for side: {}", side == null ? "null" : side.getName());
+        }
+        List<BakedQuad> quads = new ArrayList<>(staticQuads);
+        for(Direction direction :sideStates.keySet()){
+                        if (sideStates.get(direction) == MicroComputerBlockEntity.MicroComputerTextures.BLANK) {
+                quads.add(dynamicQuads.get(direction).get(MicroComputerBlockEntity.MicroComputerTextureBasic.BLANK));
+            }
+                        else if (sideStates.get(direction) == MicroComputerBlockEntity.MicroComputerTextures.CABLE) {
+                quads.add(dynamicQuads.get(direction).get(MicroComputerBlockEntity.MicroComputerTextureBasic.CABLE));
+            }
+            else{
+                quads.add(dynamicQuads.get(direction).get(MicroComputerBlockEntity.MicroComputerTextureBasic.REDSTONE));
+                quads.add(overlayQuads.get(direction));
+            }
+        }
+        return quads;
     }
 
     @Override

@@ -9,6 +9,7 @@ import io.github.jack9761.MicroComputers.client.MicroComputersClient;
 import io.github.jack9761.MicroComputers.item.ModItem;
 import io.github.jack9761.MicroComputers.forge.client.MicroComputerModelLoader;
 import io.github.jack9761.MicroComputers.client.MicroComputersClient;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -31,11 +32,12 @@ public final class MicroComputersForge {
         ModMenu.MENUS.register();
         ModEventBus.addListener(this::onClientSetup);
         ModEventBus.addListener(this::onRegisterGeometryLoaders);
+        ModEventBus.addListener(this::onRegisterAdditionalModels);
         MicroComputers.init();
     }
 
     private void onRegisterGeometryLoaders(final ModelEvent.RegisterGeometryLoaders event) {
-        event.register(MicroComputersClient.LOADER_ID.toString(), new MicroComputerModelLoader());
+        event.register(MicroComputersClient.LOADER_ID.getPath(), new MicroComputerModelLoader());
     }
 
     private void onClientSetup(final FMLClientSetupEvent event){
@@ -43,5 +45,9 @@ public final class MicroComputersForge {
     }
     private void addCreative(BuildCreativeModeTabContentsEvent event){
 
+    }
+    private void onRegisterAdditionalModels(final ModelEvent.RegisterAdditional event) {
+        event.register(new ResourceLocation(MicroComputers.MOD_ID, "block/microcomputer/redstone_overlay_tint"));
+        event.register(new ResourceLocation(MicroComputers.MOD_ID, "block/microcomputer/wire_side"));
     }
 }
