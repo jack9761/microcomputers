@@ -1,5 +1,6 @@
 package io.github.jack9761.MicroComputers.forge.client;
 
+import io.github.jack9761.MicroComputers.block.MicroComputerBlock;
 import io.github.jack9761.MicroComputers.block.entity.MicroComputerBlockEntity;
 import io.github.jack9761.MicroComputers.client.commonMicroComputerBakedModel;
 import net.minecraft.client.renderer.RenderType;
@@ -21,7 +22,7 @@ import static io.github.jack9761.MicroComputers.forge.MicroComputerBlockEntityFo
 @OnlyIn(Dist.CLIENT)
 public class MicroComputerBakedModelForge extends commonMicroComputerBakedModel {
 
-    public MicroComputerBakedModelForge(List<BakedQuad> staticQuads, EnumMap<Direction, EnumMap<MicroComputerBlockEntity.MicroComputerTextureBasic, BakedQuad>> dynamicQuads, EnumMap<Direction, BakedQuad> overlayQuads, BakedModel staticModel) {
+    public MicroComputerBakedModelForge(List<BakedQuad> staticQuads, EnumMap<Direction, EnumMap<MicroComputerBlock.SideTexture, BakedQuad>> dynamicQuads, EnumMap<Direction, BakedQuad> overlayQuads, BakedModel staticModel) {
         super(staticQuads, dynamicQuads, overlayQuads, staticModel);
     }
 

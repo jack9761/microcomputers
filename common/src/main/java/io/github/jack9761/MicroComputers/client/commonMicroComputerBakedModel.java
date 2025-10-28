@@ -1,6 +1,7 @@
 package io.github.jack9761.MicroComputers.client;
 
 import io.github.jack9761.MicroComputers.MicroComputers;
+import io.github.jack9761.MicroComputers.block.MicroComputerBlock;
 import io.github.jack9761.MicroComputers.block.entity.MicroComputerBlockEntity;
 
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -24,11 +25,11 @@ public abstract class commonMicroComputerBakedModel implements BakedModel {
             5, Direction.EAST
     );
     private final List<BakedQuad> staticQuads;
-    private final EnumMap<Direction, EnumMap<MicroComputerBlockEntity.MicroComputerTextureBasic, BakedQuad>> dynamicQuads;
+    private final EnumMap<Direction, EnumMap<MicroComputerBlock.SideTexture, BakedQuad>> dynamicQuads;
     private final EnumMap<Direction, BakedQuad> overlayQuads;
     protected final BakedModel staticModelBaked;
 
-    public commonMicroComputerBakedModel(List<BakedQuad> staticQuads, EnumMap<Direction, EnumMap<MicroComputerBlockEntity.MicroComputerTextureBasic, BakedQuad>> dynamicQuads, EnumMap<Direction, BakedQuad> overlayQuads, BakedModel staticModel) {
+    public commonMicroComputerBakedModel(List<BakedQuad> staticQuads, EnumMap<Direction, EnumMap<MicroComputerBlock.SideTexture, BakedQuad>> dynamicQuads, EnumMap<Direction, BakedQuad> overlayQuads, BakedModel staticModel) {
         this.staticQuads = staticQuads;
         this.dynamicQuads = dynamicQuads;
         this.overlayQuads = overlayQuads;
@@ -43,13 +44,13 @@ public abstract class commonMicroComputerBakedModel implements BakedModel {
         List<BakedQuad> quads = new ArrayList<>(staticQuads);
         for(Direction direction :sideStates.keySet()){
                         if (sideStates.get(direction) == MicroComputerBlockEntity.MicroComputerTextures.BLANK) {
-                quads.add(dynamicQuads.get(direction).get(MicroComputerBlockEntity.MicroComputerTextureBasic.BLANK));
+                quads.add(dynamicQuads.get(direction).get(MicroComputerBlock.SideTexture.BLANK));
             }
                         else if (sideStates.get(direction) == MicroComputerBlockEntity.MicroComputerTextures.CABLE) {
-                quads.add(dynamicQuads.get(direction).get(MicroComputerBlockEntity.MicroComputerTextureBasic.CABLE));
+                quads.add(dynamicQuads.get(direction).get(MicroComputerBlock.SideTexture.CABLE));
             }
             else{
-                quads.add(dynamicQuads.get(direction).get(MicroComputerBlockEntity.MicroComputerTextureBasic.REDSTONE));
+                quads.add(dynamicQuads.get(direction).get(MicroComputerBlock.SideTexture.REDSTONE));
                 quads.add(overlayQuads.get(direction));
             }
         }

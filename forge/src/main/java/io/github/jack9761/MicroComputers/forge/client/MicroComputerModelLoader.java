@@ -4,6 +4,7 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
 import io.github.jack9761.MicroComputers.MicroComputers;
+import io.github.jack9761.MicroComputers.block.MicroComputerBlock;
 import io.github.jack9761.MicroComputers.block.entity.MicroComputerBlockEntity;
 import io.github.jack9761.MicroComputers.client.MicroComputersClient;
 import io.github.jack9761.MicroComputers.client.commonMicroComputerBakedModel;
@@ -42,9 +43,9 @@ public class MicroComputerModelLoader implements IGeometryLoader<MicroComputerMo
         public BakedModel bake(IGeometryBakingContext context, ModelBaker bakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
             //EnumMap<MicroComputerBlockEntity.MicroComputerTextures, TextureAtlasSprite> texture_map_TextureAtlasSprite = new EnumMap<>(MicroComputerBlockEntity.MicroComputerTextures.class);
             List<BakedQuad> staticQuads = new ArrayList<>();
-            EnumMap<Direction, EnumMap<MicroComputerBlockEntity.MicroComputerTextureBasic,BakedQuad>> dynamicQuads = new EnumMap<>(Direction.class);
+            EnumMap<Direction, EnumMap<MicroComputerBlock.SideTexture,BakedQuad>> dynamicQuads = new EnumMap<>(Direction.class);
             for(Direction direction : Direction.values()){
-                dynamicQuads.put(direction,new EnumMap<>(MicroComputerBlockEntity.MicroComputerTextureBasic.class));
+                dynamicQuads.put(direction,new EnumMap<>(MicroComputerBlock.SideTexture.class));
             }
             BakedModel staticModelBaked = bakery.bake(STATIC_MODEL_LOCATION, modelState,spriteGetter);
             for (BakedQuad bakedQuad : staticModelBaked.getQuads(null, null, RandomSource.create(), ModelData.EMPTY, null)) {
@@ -73,9 +74,9 @@ public class MicroComputerModelLoader implements IGeometryLoader<MicroComputerMo
                         break;
                 }
                                 if (direction != null) {
-                    dynamicQuads.get(direction).put(MicroComputerBlockEntity.MicroComputerTextureBasic.BLANK,bakedQuad);
-                    dynamicQuads.get(direction).put(MicroComputerBlockEntity.MicroComputerTextureBasic.REDSTONE, MicroComputersClient.copyBakedQuadwithNewSprite(bakedQuad,spriteGetter.apply(redstone_side)));
-                    dynamicQuads.get(direction).put(MicroComputerBlockEntity.MicroComputerTextureBasic.CABLE, MicroComputersClient.copyBakedQuadwithNewSprite(bakedQuad,spriteGetter.apply(wire_side)));
+                    dynamicQuads.get(direction).put(MicroComputerBlock.SideTexture.BLANK,bakedQuad);
+                    dynamicQuads.get(direction).put(MicroComputerBlock.SideTexture.REDSTONE, MicroComputersClient.copyBakedQuadwithNewSprite(bakedQuad,spriteGetter.apply(redstone_side)));
+                    dynamicQuads.get(direction).put(MicroComputerBlock.SideTexture.CABLE, MicroComputersClient.copyBakedQuadwithNewSprite(bakedQuad,spriteGetter.apply(wire_side)));
                 }
             }
             EnumMap<Direction,BakedQuad> overlayQuads = new EnumMap<>(Direction.class);

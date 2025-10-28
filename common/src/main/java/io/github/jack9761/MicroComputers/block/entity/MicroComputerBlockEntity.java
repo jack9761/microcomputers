@@ -55,11 +55,7 @@ public class MicroComputerBlockEntity extends BaseContainerBlockEntity implement
         REDSTONE_14,
         REDSTONE_15
     }
-    public static enum MicroComputerTextureBasic{
-        BLANK,
-        CABLE,
-        REDSTONE
-        }
+
     private MicroComputerEngine computerEngine;
 
     private HashSet<ServerPlayer> watchingplayers;

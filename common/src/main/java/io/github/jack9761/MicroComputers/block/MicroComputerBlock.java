@@ -32,12 +32,12 @@ public class MicroComputerBlock extends BaseEntityBlock {
 
     private static VoxelShape COLLISON_SHAPE = Block.box(0,0,0,16,16,16);
 
-    public static final EnumProperty<SideTexture> UP = EnumProperty.create("up", SideTexture.class);
-    public static final EnumProperty<SideTexture> DOWN = EnumProperty.create("down", SideTexture.class);
-    public static final EnumProperty<SideTexture> NORTH = EnumProperty.create("north", SideTexture.class);
-    public static final EnumProperty<SideTexture> SOUTH = EnumProperty.create("south", SideTexture.class);
-    public static final EnumProperty<SideTexture> EAST = EnumProperty.create("east", SideTexture.class);
-    public static final EnumProperty<SideTexture> WEST = EnumProperty.create("west", SideTexture.class);
+//    public static final EnumProperty<SideTexture> UP = EnumProperty.create("up", SideTexture.class);
+//    public static final EnumProperty<SideTexture> DOWN = EnumProperty.create("down", SideTexture.class);
+//    public static final EnumProperty<SideTexture> NORTH = EnumProperty.create("north", SideTexture.class);
+//    public static final EnumProperty<SideTexture> SOUTH = EnumProperty.create("south", SideTexture.class);
+//    public static final EnumProperty<SideTexture> EAST = EnumProperty.create("east", SideTexture.class);
+//    public static final EnumProperty<SideTexture> WEST = EnumProperty.create("west", SideTexture.class);
 
     public static enum SideTexture implements StringRepresentable {
         BLANK,
@@ -68,21 +68,21 @@ public class MicroComputerBlock extends BaseEntityBlock {
 
     public MicroComputerBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any()
-                .setValue(UP, SideTexture.BLANK)
-                .setValue(DOWN, SideTexture.BLANK)
-                .setValue(NORTH, SideTexture.BLANK)
-                .setValue(SOUTH, SideTexture.BLANK)
-                .setValue(EAST, SideTexture.BLANK)
-                .setValue(WEST, SideTexture.BLANK));
+//        this.registerDefaultState(this.stateDefinition.any()
+//                .setValue(UP, SideTexture.BLANK)
+//                .setValue(DOWN, SideTexture.BLANK)
+//                .setValue(NORTH, SideTexture.BLANK)
+//                .setValue(SOUTH, SideTexture.BLANK)
+//                .setValue(EAST, SideTexture.BLANK)
+//                .setValue(WEST, SideTexture.BLANK));
 
         //InteractionEvent.RIGHT_CLICK_BLOCK.register(this);
     }
 
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(UP, DOWN, NORTH, SOUTH, EAST, WEST);
-    }
+//    @Override
+//    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+//        builder.add(UP, DOWN, NORTH, SOUTH, EAST, WEST);
+//    }
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
