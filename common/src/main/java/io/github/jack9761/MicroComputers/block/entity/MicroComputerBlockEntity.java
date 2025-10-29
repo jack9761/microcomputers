@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.EnumMap;
 import java.util.HashSet;
+import java.util.Map;
 
 
 public class MicroComputerBlockEntity extends BaseContainerBlockEntity implements MenuProvider {
@@ -71,6 +72,12 @@ public class MicroComputerBlockEntity extends BaseContainerBlockEntity implement
         this.addonList = NonNullList.withSize(ADDON_SLOTS,ItemStack.EMPTY);
         watchingplayers = new HashSet<ServerPlayer>();
         computerEngine = new MicroComputerEngine();
+        clientTextureMap = new EnumMap<>(Map.of(Direction.UP,MicroComputerTextures.CABLE,
+                Direction.DOWN,MicroComputerTextures.CABLE,
+                Direction.EAST,MicroComputerTextures.CABLE,
+                Direction.WEST,MicroComputerTextures.CABLE,
+                Direction.NORTH,MicroComputerTextures.CABLE,
+                Direction.SOUTH,MicroComputerTextures.CABLE));
     }
 
     @Override
@@ -83,7 +90,12 @@ public class MicroComputerBlockEntity extends BaseContainerBlockEntity implement
     @Override
     public void load(CompoundTag nbt) {
         if(level.isClientSide()){
-
+            clientTextureMap = new EnumMap<>(Map.of(Direction.UP,MicroComputerTextures.CABLE,
+                    Direction.DOWN,MicroComputerTextures.CABLE,
+                    Direction.EAST,MicroComputerTextures.CABLE,
+                    Direction.WEST,MicroComputerTextures.CABLE,
+                    Direction.NORTH,MicroComputerTextures.CABLE,
+                    Direction.SOUTH,MicroComputerTextures.CABLE));
         }
         super.load(nbt);
         ContainerHelper.loadAllItems(nbt, this.addonList);

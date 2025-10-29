@@ -1,3 +1,6 @@
 {
-  "loader": "microcomputers:microcomputer_loader"
+  "loader": "microcomputers:microcomputer_loader",
+  "textures": {
+    "particle": "microcomputers:block/microcomputer/redstone_0_side"
+  }
 }

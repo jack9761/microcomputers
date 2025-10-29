@@ -27,8 +27,8 @@ import java.util.function.Function;
 
 public class MicroComputerModelLoader implements IGeometryLoader<MicroComputerModelLoader.Geometry> {
 
-    public static final ResourceLocation STATIC_MODEL_LOCATION = new ResourceLocation(MicroComputers.MOD_ID, "models/block/microcomputer");
-    public static final ResourceLocation OVERLAY_MODEL_LOCATION = new ResourceLocation(MicroComputers.MOD_ID, "models/block/microcomputer_overlays");
+    public static final ResourceLocation STATIC_MODEL_LOCATION = new ResourceLocation(MicroComputers.MOD_ID, "block/microcomputer");
+    public static final ResourceLocation OVERLAY_MODEL_LOCATION = new ResourceLocation(MicroComputers.MOD_ID, "block/microcomputer_overlays");
 
     public void onResourceManagerReload(ResourceManager ResourceManager) {}
     @Override

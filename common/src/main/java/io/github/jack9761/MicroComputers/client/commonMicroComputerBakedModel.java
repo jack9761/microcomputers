@@ -84,7 +84,7 @@ public abstract class commonMicroComputerBakedModel implements BakedModel {
 
     @Override
     public TextureAtlasSprite getParticleIcon() {
-        return null;
+        return staticModelBaked.getParticleIcon();
     }
 
     @Override
