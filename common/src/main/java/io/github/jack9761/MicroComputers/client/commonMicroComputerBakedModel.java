@@ -39,7 +39,7 @@ public abstract class commonMicroComputerBakedModel implements BakedModel {
 
     public List<BakedQuad> getAgnosticQuads(EnumMap<Direction, MicroComputerBlockEntity.MicroComputerTextures> sideStates, Direction side, RandomSource rand) {
         if(side!=null){
-            MicroComputers.LOGGER.info("getAgnosticQuads called for side: {}", side == null ? "null" : side.getName());
+            return    List.of();
         }
         List<BakedQuad> quads = new ArrayList<>(staticQuads);
         for(Direction direction :sideStates.keySet()){
