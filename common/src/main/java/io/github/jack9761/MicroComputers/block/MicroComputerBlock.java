@@ -2,6 +2,7 @@ package io.github.jack9761.MicroComputers.block;
 
 import dev.architectury.event.events.common.InteractionEvent;
 import io.github.jack9761.MicroComputers.block.entity.MicroComputerBlockEntity;
+import io.github.jack9761.MicroComputers.block.entity.ModBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
@@ -106,7 +107,7 @@ public class MicroComputerBlock extends BaseEntityBlock {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new MicroComputerBlockEntity(pos,state);
+        return ModBlockEntity.MICROCOMPUTER_BLOCK_ENTITY.get().create(pos,state);
     }
 
     @Override

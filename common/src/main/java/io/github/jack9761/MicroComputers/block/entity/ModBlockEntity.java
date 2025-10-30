@@ -8,7 +8,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class ModBlockEntity {
+    public static BlockEntityType.BlockEntitySupplier<? extends MicroComputerBlockEntity> MICROCOMPUTER_BLOCK_ENTITY_SUPPLIER;
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(MicroComputers.MOD_ID, Registries.BLOCK_ENTITY_TYPE);
-    public static final RegistrySupplier<BlockEntityType<MicroComputerBlockEntity>> MICROCOMPUTER_BLOCK_ENTITY = BLOCK_ENTITIES.register("microcomputer_block_entity",
-            () -> BlockEntityType.Builder.of(MicroComputerBlockEntity::new, ModBlock.MICROCOMPUTER_BLOCK.get()).build(null));
+    public static final RegistrySupplier<BlockEntityType<? extends MicroComputerBlockEntity>> MICROCOMPUTER_BLOCK_ENTITY = BLOCK_ENTITIES.register("microcomputer_block_entity",
+            () -> BlockEntityType.Builder.of(MICROCOMPUTER_BLOCK_ENTITY_SUPPLIER, ModBlock.MICROCOMPUTER_BLOCK.get()).build(null));
 }

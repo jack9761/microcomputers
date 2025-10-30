@@ -11,16 +11,16 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.model.IDynamicBakedModel;
 import net.minecraftforge.client.model.data.ModelData;
 
 import javax.annotation.Nonnull;
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 
 import static io.github.jack9761.MicroComputers.forge.MicroComputerBlockEntityForge.sideStates;
 @OnlyIn(Dist.CLIENT)
-public class MicroComputerBakedModelForge extends commonMicroComputerBakedModel {
+public class MicroComputerBakedModelForge extends commonMicroComputerBakedModel implements IDynamicBakedModel {
 
     public MicroComputerBakedModelForge(List<BakedQuad> staticQuads, EnumMap<Direction, EnumMap<MicroComputerBlock.SideTexture, BakedQuad>> dynamicQuads, EnumMap<Direction, BakedQuad> overlayQuads, BakedModel staticModel) {
         super(staticQuads, dynamicQuads, overlayQuads, staticModel);

@@ -23,6 +23,7 @@ public final class MicroComputersForge {
     public MicroComputersForge() {
         EventBuses.registerModEventBus(MicroComputers.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
         IEventBus ModEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        ModBlockEntity.MICROCOMPUTER_BLOCK_ENTITY_SUPPLIER = MicroComputerBlockEntityForge::new;
         ModItem.ITEMS.register();
         ModBlock.BLOCKS.register();
         ModCreativeTab.TABS.register();
