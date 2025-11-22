@@ -43,10 +43,10 @@ public abstract class commonMicroComputerBakedModel implements BakedModel {
         }
         List<BakedQuad> quads = new ArrayList<>(staticQuads);
         for(Direction direction :sideStates.keySet()){
-                        if (sideStates.get(direction) == MicroComputerBlockEntity.MicroComputerTextures.BLANK) {
+            if (sideStates.get(direction) == MicroComputerBlockEntity.MicroComputerTextures.BLANK) {
                 quads.add(dynamicQuads.get(direction).get(MicroComputerBlock.SideTexture.BLANK));
             }
-                        else if (sideStates.get(direction) == MicroComputerBlockEntity.MicroComputerTextures.CABLE) {
+            else if (sideStates.get(direction) == MicroComputerBlockEntity.MicroComputerTextures.CABLE) {
                 quads.add(dynamicQuads.get(direction).get(MicroComputerBlock.SideTexture.CABLE));
             }
             else{

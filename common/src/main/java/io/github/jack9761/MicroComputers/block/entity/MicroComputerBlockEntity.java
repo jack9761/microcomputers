@@ -64,6 +64,14 @@ public class MicroComputerBlockEntity extends BaseContainerBlockEntity implement
 
     private NonNullList<ItemStack> addonList;
 
+    public EnumMap<Direction, MicroComputerTextures> getClientTextureMap() {
+        if(computerEngine.internalCableConnections!=null){
+            EnumMap<Direction,MicroComputerTextures> textureMap = new EnumMap<>(Direction.class);
+
+            return textureMap;
+        }
+    }
+
     public EnumMap<Direction,MicroComputerTextures> clientTextureMap;
 
     public MicroComputerBlockEntity(BlockPos pos, BlockState blockState) {
@@ -71,7 +79,6 @@ public class MicroComputerBlockEntity extends BaseContainerBlockEntity implement
         this.addonList = NonNullList.withSize(ADDON_SLOTS,ItemStack.EMPTY);
         watchingplayers = new HashSet<ServerPlayer>();
         computerEngine = new MicroComputerEngine();
-        MicroComputerBlockEntityHelper.requestModelDataUpdate(this);
     }
 
     @Override
@@ -84,19 +91,37 @@ public class MicroComputerBlockEntity extends BaseContainerBlockEntity implement
     @Override
     public void load(CompoundTag nbt) {
         if(level.isClientSide()){
-
+            clientTextureMap = new EnumMap<>(Direction.class);
+            int[] textureOrdinals = nbt.getIntArray("client_texture_map");
+            clientTextureMap.put(Direction.UP, MicroComputerTextures.values()[textureOrdinals[1]]);
+            clientTextureMap.put(Direction.DOWN, MicroComputerTextures.values()[textureOrdinals[0]]);
+            clientTextureMap.put(Direction.NORTH, MicroComputerTextures.values()[textureOrdinals[2]]);
+            clientTextureMap.put(Direction.SOUTH, MicroComputerTextures.values()[textureOrdinals[3]]);
+            clientTextureMap.put(Direction.EAST, MicroComputerTextures.values()[textureOrdinals[4]]);
+            clientTextureMap.put(Direction.WEST, MicroComputerTextures.values()[textureOrdinals[5]]);
+            MicroComputerBlockEntityHelper.requestModelDataUpdate(this);
         }
-        super.load(nbt);
-        ContainerHelper.loadAllItems(nbt, this.addonList);
-        computerEngine = MicroComputerEngine.microComputerEnginefromCompoundTag((CompoundTag) nbt.get("microcomputer_engine"));
+        else {
+            super.load(nbt);
+            ContainerHelper.loadAllItems(nbt, this.addonList);
+            computerEngine = MicroComputerEngine.microComputerEnginefromCompoundTag((CompoundTag) nbt.get("microcomputer_engine"));
+        }
     }
 
     @Override
     public CompoundTag getUpdateTag() {
-
-        return super.getUpdateTag();
+        CompoundTag tag = super.getUpdateTag();
+        tag.putIntArray("client_texture_map", new int[]{
+                clientTextureMap.get(Direction.UP).ordinal(),
+                clientTextureMap.get(Direction.DOWN).ordinal(),
+                clientTextureMap.get(Direction.NORTH).ordinal(),
+                clientTextureMap.get(Direction.SOUTH).ordinal(),
+                clientTextureMap.get(Direction.EAST).ordinal(),
+                clientTextureMap.get(Direction.WEST).ordinal()
+        });
+        getLevel().send
+        return tag;
     }
-
 
     @Override
     public int getContainerSize() {
